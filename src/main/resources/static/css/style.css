@@ -1,0 +1,15 @@
+@charset "UTF-8";
+#wrap{
+	width:600px;
+	height:800px;
+	margin:0 auto;
+}
+header{
+	height:80px;
+}
+header>#searchbox{
+	height:40px;
+}
+.contents{
+	height:400px;
+}
