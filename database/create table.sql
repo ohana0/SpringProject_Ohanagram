@@ -1,11 +1,13 @@
 CREATE TABLE `user`(
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `userId` VARCHAR(16) NOT NULL,
-    `password` VARCHAR(16) NOT NULL,
+    `password` VARCHAR(64) NOT NULL,
     `name` VARCHAR(16) NOT NULL,
     `email` VARCHAR(32) NOT NULL,
     `profileImagePath` VARCHAR(128),
+    `introduce` TEXT,
 	`createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE `user`;

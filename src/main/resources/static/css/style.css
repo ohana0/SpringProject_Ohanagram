@@ -1,6 +1,6 @@
 @charset "UTF-8";
 #wrap{
-	width:600px;
+	width:1200px;
 	height:800px;
 	margin:0 auto;
 }
@@ -11,5 +11,11 @@ header>#searchbox{
 	height:40px;
 }
 .contents{
-	height:400px;
+}
+.contents>.join-box{
+	width:500px;
+}
+.contents>.join-box>*>.input-label{
+	font-weight:600;
+	font-size:24px;
 }
