@@ -12,7 +12,20 @@
 		(#{loginId},#{password},#{name},#{email},#{profileImage},#{introduce})
 		
 	</insert>
-
+	
+	<select id="countId" parameterType="String" resultType="int">
+		SELECT count(0)
+		FROM `user`
+		WHERE `userId` = #{loginId}
+	</select>
+	
+	<select id="findByLoginIdAndPassword" parameterType="String" resultType="com.ohana0.ohanagram.user.domain.User">
+		SELECT `id`, `userId`,`password`,`name`,`email`,`profileImagePath`,`introduce`,`createdAt`,`updatedAt`
+		FROM `user`
+		WHERE `userId` = #{loginId} AND `password` = #{password}
+		
+	
+	</select>
 
 
 

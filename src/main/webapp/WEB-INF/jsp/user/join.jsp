@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,24 +14,7 @@
 </head>
 <body>
 <div id="wrap">
-	<header class="d-flex align-items-center">
-		<h1 class="m-3 col-4">ohanagram</h1>
-		<div class="col-4 d-flex search-box">
-			<input type="text" class="form-control" id="searchbox">
-			<a href="#" class="searchBtn">
-				<img alt="searchIcon" src="/static/image/search_icon.png" width="40px">
-			</a>
-		
-		</div>
-		<div class="d-flex col-4 justify-content-end align-items-center">
-			<a href="#" class="createPostBtn">
-				<img alt="searchIcon" src="/static/image/create_post_icon.png" width="40px" height="40px" class="mr-2">
-			</a>
-			<a href="#" class="myProfileBtn">
-				<img alt="userImage" src="/static/image/null_user_image.png" width="50px" id="user_profile_image">
-			</a>
-		</div>
-		</header>
+	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 	<section class="contents d-flex justify-content-center">
 		<div class="join-box">
 			<h1 class="d-flex justify-content-center">Welcome</h1>
@@ -69,24 +53,51 @@
 			</div>
 			
 			<button type="button" class="btn btn-outline-secondary btn-block mt-2" id="joinBtn">제출</button>
+			<br><div>계정이 있으신가요? <a href="/user/login-view">로그인</a></div>
 		
 		</div>
 	</section>
-	<footer>
-		<div class="text-secondary">copyright @ ohanagram 2023</div>
-	</footer>
+	<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 
 </div>
 
 
 <script>
 	$(document).ready(function(){
+		let idChecked = false;
+		
+		$("#idInput").on("input",function(){
+			
+			isChecked = false;
+		});
+		
+		
 		$("#idConfirm").on("click",function(){
 			
 			let loginId = $("#idInput").val();
 			
+			$.ajax({
+				type:"post"
+				,url:"/user/join/duplicate-id"
+				,data:{"loginId":loginId}
+				,success:function(data){
+					if (data.result == "duplicate"){
+						alert("중복된 아이디입니다.");
+						idChecked = false;
+					}
+					else{
+						alert("사용가능한 아이디입니다.");
+						idChecked = true;
+					}
+					
+				}
+				,error:function(){
+					alert("오류발생");
+				}
+				
+			});
 			
-		})
+		});
 		
 		$("#joinBtn").on("click",function(){
 			let loginId = $("#idInput").val();
@@ -94,7 +105,10 @@
 			let name = $("#nameInput").val();
 			let profileImage = $("#profileImageInput").val();
 			let introduce = $("#introduceInput").val();
-			
+			if(!idChecked){
+				alert("아이디 중복확인을 해주세요.");
+				return;
+			}
 			
 			if(loginId == ""){
 				alert("아이디를 입력하세요");
@@ -104,7 +118,7 @@
 				alert("비밀번호를 입력하세요");
 				return;
 			}
-			if(password.length <= 4){
+			if(password.length < 4){
 				alert("최소 4글자의 비밀번호를 입력하세요");
 				return;
 			}
@@ -152,13 +166,13 @@
 				
 				
 				
-			})
+			});
 			
 			
 			
 			
-		})
-	})
+		});
+	});
 
 	
 </script>

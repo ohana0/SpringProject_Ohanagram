@@ -19,3 +19,11 @@ header>#searchbox{
 	font-weight:600;
 	font-size:24px;
 }
+.contents>.login-box{
+	width:500px;
+	height:400px;
+}
+.contents>.login-box>*>.input-label{
+	font-weight:600;
+	font-size:24px;
+}

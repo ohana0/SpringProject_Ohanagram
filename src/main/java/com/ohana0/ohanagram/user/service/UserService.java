@@ -1,5 +1,7 @@
 package com.ohana0.ohanagram.user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,21 @@ public class UserService {
 		return count;
 	}
 
+	public int countId(String loginId) {
+		int count = userRepository.countId(loginId);
+		return count;
+	}
+
+	public User getUser(String loginId, String password) {
+		String encryptPassword = EncryptUtils.md5(password);
+		List<User> userList = userRepository.findByLoginIdAndPassword(loginId,encryptPassword);
+		if(userList.size() == 0) {
+			return null;
+		}
+		else {
+			return userList.get(0);
+		}
+	}
 
 
 }
