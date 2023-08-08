@@ -17,7 +17,7 @@
 	<section class="contents d-flex justify-content-center">
 		<div class="login-box">
 			<div class="d-flex justify-content-center">
-				<h1>ohanagram</h1>
+				<h1>Sign-in</h1>
 			</div>
 			<br>
 			<form id="loginForm">
