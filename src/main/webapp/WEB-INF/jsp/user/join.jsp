@@ -44,7 +44,7 @@
 			
 			<div class="d-flex align-items-center">
 				<label class="input-label col-3 d-flex justify-content-center">Profile</label>
-				<input type="text" id="profileImageInput" class="form-control input-value col-9" placeholder="image path">
+				<input type="file" id="profileImageInput" class="form-control col-3" accept=".jpg, .png"><div class="col-6">.jpg,.png 파일만 가능</div>
 			</div>			
 			
 			<div class="d-flex align-items-center">
@@ -103,8 +103,12 @@
 			let loginId = $("#idInput").val();
 			let password = $("#passwordInput").val();
 			let name = $("#nameInput").val();
-			let profileImage = $("#profileImageInput").val();
+			var file = $("#profileImageInput")[0].files[0];
+			if(file == ""){
+				file="/static/image/null_user_image.png";
+			}
 			let introduce = $("#introduceInput").val();
+
 			if(!idChecked){
 				alert("아이디 중복확인을 해주세요.");
 				return;
@@ -136,18 +140,22 @@
 			}
 			let email = $("#emailNameInput").val() + "@" + $("#emailAddressInput").val();
 
+			var formData = new FormData();
+			formData.append("loginId",loginId);
+			formData.append("password",password);
+			formData.append("name",name);
+			formData.append("email",email);
+			formData.append("profileImage",file);
+			formData.append("introduce",introduce);
+			
 			$.ajax({
 			
 				type:"post"
 				,url:"/user/join"
-				,data:{
-					"loginId": loginId
-					,"password":password
-					,"name":name
-					,"email":email
-					,"profileImage":profileImage
-					,"introduce":introduce
-				}
+				,data:formData
+			    ,enctype: 'multipart/form-data' // 파일 업로드를 위한 필수 설정
+			   	,processData: false             // 파일 업로드를 위한 필수 설정
+			    ,contentType: false              // 파일 업로드를 위한 필수 설정
 				,success:function(data){
 					if(data.result == "success"){
 						alert("가입 성공");

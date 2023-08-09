@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ohana0.ohanagram.user.domain.User;
 import com.ohana0.ohanagram.user.service.UserService;
@@ -27,13 +28,13 @@ public class UserRestController {
 			,@RequestParam("password") String password
 			,@RequestParam("name") String name
 			,@RequestParam("email") String email
-			,@RequestParam("profileImage") String profileImage
+			,@RequestParam(value="profileImage", required=false) MultipartFile file
 			,@RequestParam("introduce") String introduce
 			){
 		
 		
 		
-		int count = userService.addUser(loginId,password,name,email,profileImage,introduce);
+		int count = userService.addUser(loginId,password,name,email,file,introduce);
 		Map<String,String> resultMap = new HashMap<>();
 		if(count == 1) {
 			resultMap.put("result", "success");

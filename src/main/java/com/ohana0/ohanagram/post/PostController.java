@@ -1,4 +1,4 @@
-package com.ohana0.ohanagram.user;
+package com.ohana0.ohanagram.post;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

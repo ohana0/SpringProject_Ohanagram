@@ -17,7 +17,9 @@
 					<img alt="searchIcon" src="/static/image/create_post_icon.png" width="40px" height="40px" class="mr-2">
 				</a>
 				<a href="/user/logout" class="myProfileBtn">
+
 					<img alt="userImage" src="/static/image/null_user_image.png" width="50px" id="user_profile_image">
+	
 				</a>
 			</c:if>
 			

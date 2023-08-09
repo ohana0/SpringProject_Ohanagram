@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ohana0.ohanagram.common.EncryptUtils;
+import com.ohana0.ohanagram.common.FileManager;
 import com.ohana0.ohanagram.user.domain.User;
 import com.ohana0.ohanagram.user.repository.UserRepository;
 
@@ -19,10 +21,12 @@ public class UserService {
 			, String password
 			, String name
 			, String email
-			, String profileImage
+			, MultipartFile profileImage
 			, String introduce) {
 		String encryptPassword = EncryptUtils.md5(password);
-		int count = userRepository.insertUser(loginId,encryptPassword,name,email,profileImage,introduce);
+		
+		String imagePath = FileManager.saveProfileImage(loginId,profileImage);
+		int count = userRepository.insertUser(loginId,encryptPassword,name,email,imagePath,introduce);
 		return count;
 	}
 
