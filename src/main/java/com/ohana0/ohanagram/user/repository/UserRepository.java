@@ -20,6 +20,8 @@ public interface UserRepository {
 
 	public int countId(@Param("loginId") String loginId);
 
-	public List<User> findByLoginIdAndPassword(@Param("loginId") String loginId, @Param("password") String encryptPassword);
+	public List<User> selectUserByLoginIdAndPassword(@Param("loginId") String loginId, @Param("password") String encryptPassword);
+
+	public User selectUserById(@Param("loginId") String loginId);
 
 }

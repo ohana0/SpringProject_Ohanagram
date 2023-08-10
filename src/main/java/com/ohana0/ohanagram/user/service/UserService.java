@@ -37,13 +37,20 @@ public class UserService {
 
 	public User getUser(String loginId, String password) {
 		String encryptPassword = EncryptUtils.md5(password);
-		List<User> userList = userRepository.findByLoginIdAndPassword(loginId,encryptPassword);
+		List<User> userList = userRepository.selectUserByLoginIdAndPassword(loginId,encryptPassword);
 		if(userList.size() == 0) {
 			return null;
 		}
 		else {
 			return userList.get(0);
 		}
+	}
+	
+	public User getUserById(String loginId) {
+		User user = userRepository.selectUserById(loginId);
+		
+		
+		return user;
 	}
 
 

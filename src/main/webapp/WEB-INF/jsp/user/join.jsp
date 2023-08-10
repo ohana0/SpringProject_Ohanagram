@@ -14,7 +14,9 @@
 </head>
 <body>
 <div id="wrap">
-	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
+	<header class="d-flex align-items-center">
+		<h1>ohanagram</h1>
+	</header>
 	<section class="contents d-flex justify-content-center">
 		<div class="join-box">
 			<h1 class="d-flex justify-content-center">Welcome</h1>
@@ -104,9 +106,7 @@
 			let password = $("#passwordInput").val();
 			let name = $("#nameInput").val();
 			var file = $("#profileImageInput")[0].files[0];
-			if(file == ""){
-				file="/static/image/null_user_image.png";
-			}
+
 			let introduce = $("#introduceInput").val();
 
 			if(!idChecked){

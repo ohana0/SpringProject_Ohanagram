@@ -13,7 +13,9 @@
 </head>
 <body>
 <div id="wrap">
-	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
+	<header class="d-flex align-items-center">
+		<h1>ohanagram</h1>
+	</header>
 	<section class="contents d-flex justify-content-center">
 		<div class="login-box">
 			<div class="d-flex justify-content-center">
