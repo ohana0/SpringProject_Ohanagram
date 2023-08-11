@@ -106,6 +106,7 @@
 			let password = $("#passwordInput").val();
 			let name = $("#nameInput").val();
 			var file = $("#profileImageInput")[0].files[0];
+			
 
 			let introduce = $("#introduceInput").val();
 

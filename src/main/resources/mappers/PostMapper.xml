@@ -12,5 +12,11 @@
 		(#{userId},#{content},#{imagePath})
 		
 	</insert>
+	<select id="selectPostList">
+		SELECT `userId`,`content`,`imagePath` 
+		FROM `post`
+		ORDER BY `id` DESC
+		
+	</select>
 
 </mapper>

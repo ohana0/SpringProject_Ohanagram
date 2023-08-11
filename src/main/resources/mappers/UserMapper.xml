@@ -27,10 +27,16 @@
 	
 	</select>
 	
-	<select id="selectUserById" parameterType="String" resultType="com.ohana0.ohanagram.user.domain.User">
+	<select id="selectUserByUserId" parameterType="String" resultType="com.ohana0.ohanagram.user.domain.User">
 		SELECT `id`, `userId`,`password`,`name`,`email`,`profileImagePath`,`introduce`,`createdAt`,`updatedAt`
 		FROM `user`
 		WHERE `userId` = #{loginId}
+	</select>
+	
+	<select id="selectUserById" parameterType="int" resultType="com.ohana0.ohanagram.user.domain.User">
+		SELECT `id`, `userId`,`password`,`name`,`email`,`profileImagePath`,`introduce`,`createdAt`,`updatedAt`
+		FROM `user`
+		WHERE `id` = #{id}
 	</select>
 	
 

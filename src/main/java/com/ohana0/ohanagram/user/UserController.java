@@ -31,12 +31,13 @@ public class UserController {
 	public String logout (HttpSession session) {
 		session.removeAttribute("userId");
 		session.removeAttribute("userName");
+		session.removeAttribute("profileImage");
 		return "redirect:/user/login-view";
 	}
 	
 	@GetMapping("/profile")
 	public String profile(@RequestParam("id") String userId, Model model) {
-		User user = userService.getUserById(userId);
+		User user = userService.getUserByUserId(userId);
 		
 		if(user.getProfileImagePath() == null) {
 			user.setProfileImagePath("/images/null/null_user_image.png");

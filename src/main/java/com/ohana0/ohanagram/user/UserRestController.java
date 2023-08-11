@@ -75,8 +75,9 @@ public class UserRestController {
 		if(user != null) {
 			resultMap.put("result", "success");
 			
-			session.setAttribute("userId", user.getId());
-			session.setAttribute("userName", user.getName());
+			session.setAttribute("id", user.getId());
+			session.setAttribute("userId", user.getUserId());
+			session.setAttribute("profileImagePath", user.getProfileImagePath());
 		}
 		else {
 			resultMap.put("result", "fail");

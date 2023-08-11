@@ -1,16 +1,28 @@
 package com.ohana0.ohanagram.post;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ohana0.ohanagram.post.dto.PostDetail;
+import com.ohana0.ohanagram.post.service.PostService;
+
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
 	
+	@Autowired
+	PostService postService;
+	
 	@GetMapping("/home-view")
-	public String homeView(){
-		
+	public String homeView(Model model){
+		List<PostDetail> postList = postService.getPostDetailList();
+		model.addAttribute("postList", postList);
 		return "/post/home";
 	}
 	

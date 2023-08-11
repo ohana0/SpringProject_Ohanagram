@@ -22,13 +22,13 @@
 		<div class="contentsArea col-6">
 			<div class="input-box card">
 				<div class="d-flex m-2">
-					<img src="/static/image/null_user_image.png" width="40px">
-					<div>${user.userId }</div>
+					<img src="${profileImagePath }" width="40px" class="m-2">
+					<b class="m-2">${userId }</b>
 				</div>
-				<textarea placeholder="내용을 입력하세요" rows="4" class="form-control border rounded m-2" style="width:550px" id="contentInput"></textarea>
+				<textarea placeholder="내용을 입력하세요" rows="4" class="form-control border rounded m-2 mt-0" style="width:550px" id="contentInput"></textarea>
 				<div class="d-flex justify-content-between m-2">
 					<i class="bi bi-card-image text-xl" id="imageIcon"></i>
-					<input type="file" class="d-none" id="postImageInput">
+					<input type="file" class="" id="postImageInput">
 					<button type="button" class="btn btn-small" id="createPost">작성</button>				
 				</div>
 			</div>
@@ -37,19 +37,21 @@
 			
 			<div class="card-list">
 				<hr class="mt-4 mb-4">
+				
+<c:forEach items="${postList}" var="post">
 				<div class="card">
 					<div class="d-flex align-items-center justify-content-between mt-2">
 						<div class="d-flex align-items-center m-2">
-							<img src="/static/image/null_user_image.png" width="40px">
-							<strong class="ml-4">이름</strong>
+							<img src="${post.profileImagePath }" width="40px">
+							<strong class="ml-4">${post.userName }</strong>
 						</div>
 						<i class="bi bi-three-dots-vertical"></i>
 					</div>
 					
-					<img src="https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_1280.jpg" width="550px" class="m-2">
+					<img src="${post.imagePath }" width="550px" class="m-2">
 					
 					<div class="likeCount m-2"><i class="bi bi-heart-fill"></i>44명이 좋아합니다</div>
-					<div class="m-2"><strong>이름</strong> 내용이 어쩌고 저쩌고 저쩌고 어쩌고 어쩌고 저쩌고 저쩌고 어쩌고 어쩌고 저쩌고 저쩌고 어쩌고 어쩌고 저쩌고 저쩌고 어쩌고 </div>
+					<div class="m-2"><strong>${post.loginId }</strong> ${post.content } </div>
 					<div class="comment-box m-2">
 						<div class="bg-light mb-2">댓글</div>
 						<div class="d-flex">
@@ -68,7 +70,7 @@
 	
 					</div>
 				</div>
-
+</c:forEach>
 		
 			</div>
 		</div>
@@ -111,7 +113,7 @@
 				,contentType: false              // 파일 업로드를 위한 필수 설정
 				,success:function(data){
 					if(data.result == "success"){
-						location.href("/post/home-view");
+						location.href="/post/home-view";
 						return;
 					}
 					else{
@@ -144,7 +146,7 @@
 				return;
 			}
 		})
-		
+			
 		
 	})
 

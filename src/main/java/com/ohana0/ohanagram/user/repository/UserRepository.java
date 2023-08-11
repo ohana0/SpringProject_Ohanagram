@@ -22,6 +22,8 @@ public interface UserRepository {
 
 	public List<User> selectUserByLoginIdAndPassword(@Param("loginId") String loginId, @Param("password") String encryptPassword);
 
-	public User selectUserById(@Param("loginId") String loginId);
-
+	public User selectUserByUserId(@Param("loginId") String loginId);
+	
+	public User selectUserById(@Param("id") int id);
+	
 }

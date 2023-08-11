@@ -25,7 +25,8 @@ public class UserService {
 			, String introduce) {
 		String encryptPassword = EncryptUtils.md5(password);
 		
-		String imagePath = FileManager.saveProfileImage(loginId,profileImage);
+				
+		String imagePath = FileManager.saveFile(loginId,profileImage);
 		int count = userRepository.insertUser(loginId,encryptPassword,name,email,imagePath,introduce);
 		return count;
 	}
@@ -46,12 +47,39 @@ public class UserService {
 		}
 	}
 	
-	public User getUserById(String loginId) {
-		User user = userRepository.selectUserById(loginId);
+	public User getUserByUserId(String loginId) {
+		User user = userRepository.selectUserByUserId(loginId);
 		
 		
 		return user;
 	}
 
+	public User getUserById(int userId) {
+		User user = userRepository.selectUserById(userId);
+		return user;
+	}
 
+	public String getUserNameById(int userId) {
+		User user = userRepository.selectUserById(userId);
+		String name = user.getName();
+		return name;
+	}
+
+	public String getLoginIdById(int userId) {
+		User user = userRepository.selectUserById(userId);
+		String loginId = user.getUserId();
+		return loginId;
+	}
+
+	public String getProfileImagePathById(int userId) {
+		User user = userRepository.selectUserById(userId);
+		String profileImagePath = user.getProfileImagePath();
+		return profileImagePath;
+	}
+
+	public int getIdByUserId(String userId) {
+		User user = userRepository.selectUserByUserId(userId);
+		return user.getId();
+		
+	}
 }
