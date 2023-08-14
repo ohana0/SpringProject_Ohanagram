@@ -2,6 +2,8 @@ package com.ohana0.ohanagram.post;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +22,8 @@ public class PostController {
 	PostService postService;
 	
 	@GetMapping("/home-view")
-	public String homeView(Model model){
-		List<PostDetail> postList = postService.getPostDetailList();
+	public String homeView(HttpSession session, Model model){
+		List<PostDetail> postList = postService.getPostDetailList(session);
 		model.addAttribute("postList", postList);
 		return "/post/home";
 	}

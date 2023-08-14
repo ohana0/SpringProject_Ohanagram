@@ -29,6 +29,7 @@ public class UserController {
 	}
 	@GetMapping("/logout")
 	public String logout (HttpSession session) {
+		session.removeAttribute("id");
 		session.removeAttribute("userId");
 		session.removeAttribute("userName");
 		session.removeAttribute("profileImage");

@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,6 +76,7 @@ public class UserRestController {
 			
 			session.setAttribute("id", user.getId());
 			session.setAttribute("userId", user.getUserId());
+			session.setAttribute("userName",user.getName());
 			session.setAttribute("profileImagePath", user.getProfileImagePath());
 		}
 		else {

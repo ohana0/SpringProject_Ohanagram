@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,9 +14,12 @@ import com.ohana0.ohanagram.comment.service.CommentService;
 
 @RestController
 public class CommentRestController {
+	
+	
 	@Autowired
 	private CommentService commentService;
 	
+	@PostMapping("/post/comment/create")
 	public Map<String,String> createComment(
 			@RequestParam("postId") int postId
 			,@RequestParam("content") String content

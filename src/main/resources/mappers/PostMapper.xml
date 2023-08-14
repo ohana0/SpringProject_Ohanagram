@@ -13,7 +13,7 @@
 		
 	</insert>
 	<select id="selectPostList">
-		SELECT `userId`,`content`,`imagePath` 
+		SELECT `id`,`userId`,`content`,`imagePath` 
 		FROM `post`
 		ORDER BY `id` DESC
 		

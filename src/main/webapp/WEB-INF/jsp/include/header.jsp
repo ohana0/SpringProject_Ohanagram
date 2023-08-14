@@ -13,9 +13,7 @@
 		</div>
 		<div class="d-flex col-4 justify-content-end align-items-center pr-4">
 			<c:if test="${not empty userId }" >
-				<a href="#" class="createPostBtn">
-					<img alt="inputIcon" src="" width="40px" height="40px" class="mr-2">
-				</a>
+
 				<a id="userProfileImage" href="#"><img alt="userImage" src="${profileImagePath }" width="50px"></a>
 
 			</c:if>

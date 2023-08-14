@@ -43,29 +43,29 @@
 					<div class="d-flex align-items-center justify-content-between mt-2">
 						<div class="d-flex align-items-center m-2">
 							<img src="${post.profileImagePath }" width="40px">
-							<strong class="ml-4">${post.userName }</strong>
+							<strong class="ml-4">${post.loginId }</strong>
 						</div>
 						<i class="bi bi-three-dots-vertical"></i>
 					</div>
 					
 					<img src="${post.imagePath }" width="550px" class="m-2">
 					
-					<div class="likeCount m-2"><i class="bi bi-heart-fill"></i>44명이 좋아합니다</div>
-					<div class="m-2"><strong>${post.loginId }</strong> ${post.content } </div>
+					<a class="likeCount m-2" id="${post.id}"><i class="bi bi-heart-fill"></i>${post.likeCount }명이 좋아합니다</a>
+					<div class="m-2"><strong>${post.userName }</strong>${post.content } </div>
 					<div class="comment-box m-2">
 						<div class="bg-light mb-2">댓글</div>
+						
+	<c:forEach items="${post.comments }" var="comment">
 						<div class="d-flex">
-							<b class="col-4">아이디</b><div>댓글내용</div>
+							<b class="col-4">${comment.userId }</b><div>${comment.content }</div>
 						</div>
-						<div class="d-flex">
-							<b class="col-4">아이디</b><div>댓글내용이 길어요길어길어길어길ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</div>
-						</div>
-						<div class="d-flex">
-							<b class="col-4">아이디</b><div>댓글내용</div>
-						</div>
-						<div class="comment-input d-flex m-2">
-							<input type="text" class="form-control">
-							<button type="button" class="btn btn-lignt btn-small">작성</button>
+	</c:forEach>
+
+						<div>
+								<input type="text" class="form-control" id="commentInput${post.id }">
+								<button type="button" class="btn btn-lignt btn-small submitBtn" postId="${post.id }">작성</button>
+
+							
 						</div>
 	
 					</div>
@@ -95,6 +95,70 @@
 
 	$(document).ready(function(){
 		
+		$(".submitBtn").on("click",function(){
+			
+			let postId = $(this).attr("postId");
+			
+			let content = $("#commentInput"+postId);
+			
+			$.ajax({
+				type:"post"
+				,url:"/post/comment/create"
+				,data:{"postId":postId
+					,"content":content	
+				}
+				,success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}
+					else{
+						alert("좋아요 실패");
+						location.reload();
+						return;
+					}
+				
+				}
+				,error:function(){
+					alert("오류발생");
+					return;
+				}
+			
+				
+				
+			})
+			
+			
+		})		
+		
+		$(".likeCount").on("click",function(){
+
+			let postId =$(this).attr("id");
+			$.ajax({
+				type:"post"
+				,url:"/post/like"
+				,data:{"postId":postId}
+				,success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}
+					else{
+						alert("좋아요 실패");
+						location.reload();
+						return;
+					}
+				
+				}
+				,error:function(){
+					alert("오류발생");
+					return;
+				}
+				
+			})
+			
+			
+			
+		})
+
 		$("#createPost").on("click",function(){
 			let content = $("#contentInput").val();
 			

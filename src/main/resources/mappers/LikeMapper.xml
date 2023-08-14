@@ -9,12 +9,21 @@
 		INSERT INTO `like`
 		(`userId`,`postId`)
 		VALUE
-		(#{userId},#{postId")
+		(#{userId},#{postId})
 	</insert>
 	<delete id="deleteLike" parameterType="map">
 		DELETE FROM `like`
 		WHERE `userId` = #{userId} AND `postId` = #{postId}
 	</delete>
+	
+	<select id="countLike" parameterType="int">
+		SELECT count(0) FROM `like` WHERE `postId` = #{postId}
+	</select>
+	
+	<select id="selectByPostIdUserId" parameterType="map">
+		SELECT count(0) FROM `like`
+		WHERE `userId` = #{userId} AND `postId` = #{postId}
+	</select>
 	
 
 </mapper>

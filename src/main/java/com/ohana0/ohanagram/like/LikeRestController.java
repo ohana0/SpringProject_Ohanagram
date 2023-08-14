@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,44 +23,44 @@ public class LikeRestController {
 			@RequestParam("postId") int postId
 			,HttpSession session
 			){
-		int userId = (Integer) session.getAttribute("id");
+		String loginId = (String) session.getAttribute("userId");
 		
-		int count = likeService.addLike(postId,userId);
+		int duplicateLike = likeService.duplicateLike(postId,loginId);
 		
-		
-		
-		Map<String,String> resultMap = new HashMap<>();
-		if(count == 1) {
-			resultMap.put("result", "success");
+		if(duplicateLike!=0) {
+			int count = likeService.deleteLike(loginId,postId);
+			
+			Map<String,String> resultMap = new HashMap<>();
+			if(count == 1) {
+				resultMap.put("result", "success");
+			}
+			else {
+				resultMap.put("result", "fail");
+			}
+			
+			return resultMap;
 		}
+		
 		else {
-			resultMap.put("result", "fail");
+			int count = likeService.addLike(postId,loginId);
+			
+			
+			
+			Map<String,String> resultMap = new HashMap<>();
+			if(count == 1) {
+				resultMap.put("result", "success");
+			}
+			else {
+				resultMap.put("result", "fail");
+			}
+			
+			return resultMap;
+			
 		}
 		
-		return resultMap;
 	}
 	
-	@DeleteMapping("/post/like/cancel")
-	public Map<String,String> deleteLike(
-			@RequestParam("postId") int postId
-			,HttpSession session){
-		int userId = (Integer) session.getAttribute("id");
 		
-		int count = likeService.deleteLike(userId,postId);
-		
-		Map<String,String> resultMap = new HashMap<>();
-		if(count == 1) {
-			resultMap.put("result", "success");
-		}
-		else {
-			resultMap.put("result", "fail");
-		}
-		
-		return resultMap;
-		
-		
-	}
-	
 	
 	
 }
