@@ -11,8 +11,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-</head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"></head>
 <body>
 <div id="wrap">
 	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
@@ -27,8 +26,8 @@
 				</div>
 				<textarea placeholder="내용을 입력하세요" rows="4" class="form-control border rounded m-2 mt-0" style="width:550px" id="contentInput"></textarea>
 				<div class="d-flex justify-content-between m-2">
-					<i class="bi bi-card-image text-xl" id="imageIcon"></i>
-					<input type="file" class="" id="postImageInput">
+					<i class="bi bi-card-image" id="imageInputIcon" style="font-size: 2rem"></i>
+					<input type="file" class="d-none" id="postImageInput">
 					<button type="button" class="btn btn-small" id="createPost">작성</button>				
 				</div>
 			</div>
@@ -49,21 +48,21 @@
 					</div>
 					
 					<img src="${post.imagePath }" width="550px" class="m-2">
-					
-					<a class="likeCount m-2" id="${post.id}"><i class="bi bi-heart-fill"></i>${post.likeCount }명이 좋아합니다</a>
+
+					<a class="likeCount m-2" id="${post.id}">${post.myLike}${post.likeCount }명이 좋아합니다</a>
 					<div class="m-2"><strong>${post.userName }</strong>${post.content } </div>
 					<div class="comment-box m-2">
 						<div class="bg-light mb-2">댓글</div>
-						
-	<c:forEach items="${post.comments }" var="comment">
+	<c:forEach items="${post.commentList }" var="comment">						
 						<div class="d-flex">
-							<b class="col-4">${comment.userId }</b><div>${comment.content }</div>
+							<b class="col-4">${comment.loginId}</b><div>${comment.content}</div>
 						</div>
-	</c:forEach>
-
+	</c:forEach>					
+						
+						
 						<div>
 								<input type="text" class="form-control" id="commentInput${post.id }">
-								<button type="button" class="btn btn-lignt btn-small submitBtn" postId="${post.id }">작성</button>
+								<button type="button" class="btn btn-lignt btn-small commentInput" postId="${post.id }">작성</button>
 
 							
 						</div>
@@ -95,39 +94,39 @@
 
 	$(document).ready(function(){
 		
-		$(".submitBtn").on("click",function(){
+		$(".commentInput").on("click",function(){
 			
 			let postId = $(this).attr("postId");
 			
-			let content = $("#commentInput"+postId);
+			let content = $("#commentInput"+postId).val();
+			
+			if(content == ""){
+				alert("내용을 입력해주세요");
+				return;
+			}
 			
 			$.ajax({
+				
 				type:"post"
 				,url:"/post/comment/create"
-				,data:{"postId":postId
-					,"content":content	
-				}
+				,data:{"postId":postId,"content":content}
 				,success:function(data){
-					if(data.result == "success"){
+					if(data.result=="success"){
 						location.reload();
 					}
 					else{
-						alert("좋아요 실패");
-						location.reload();
+						alert("댓글입력 실패");
 						return;
+
 					}
-				
 				}
 				,error:function(){
-					alert("오류발생");
+					alert("오류 발생");
 					return;
 				}
-			
-				
 				
 			})
-			
-			
+				
 		})		
 		
 		$(".likeCount").on("click",function(){
@@ -142,7 +141,7 @@
 						location.reload();
 					}
 					else{
-						alert("좋아요 실패");
+						alert("실패");
 						location.reload();
 						return;
 					}
@@ -159,6 +158,13 @@
 			
 		})
 
+		
+		$("#imageInputIcon").on("click",function(){
+			$("#postImageInput").click();
+			
+		})
+		
+		
 		$("#createPost").on("click",function(){
 			let content = $("#contentInput").val();
 			
@@ -192,25 +198,6 @@
 				
 			})
 		})
-		
-		$("#imageIcon").on("click",function(){
-			$("#postImageInput").click();
-		})
-		
-		
-		$("#userProfileImage").click(function(){
-
-			if($("#userNav").hasClass("d-none")){
-				
-				$("#userNav").removeClass("d-none");
-				return;
-			}
-			else{
-				$("#userNav").addClass("d-none");
-				return;
-			}
-		})
-			
 		
 	})
 

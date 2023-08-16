@@ -15,19 +15,18 @@ import com.ohana0.ohanagram.comment.service.CommentService;
 @RestController
 public class CommentRestController {
 	
-	
 	@Autowired
 	private CommentService commentService;
 	
+	
 	@PostMapping("/post/comment/create")
 	public Map<String,String> createComment(
-			@RequestParam("postId") int postId
+			@RequestParam("postId") String postId
 			,@RequestParam("content") String content
-			,HttpSession session
-			){
-		int userId = (Integer) session.getAttribute("id");
+			,HttpSession session){
+		int userId = (Integer)session.getAttribute("id");
 		
-		int count = commentService.addComment(userId, postId,content);
+		int count = commentService.addComment(userId,postId,content);		
 		
 		
 		
@@ -40,6 +39,7 @@ public class CommentRestController {
 		}
 		
 		return resultMap;
+		
 	}
 	
 }

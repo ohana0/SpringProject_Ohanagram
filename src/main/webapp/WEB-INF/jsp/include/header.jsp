@@ -4,13 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<header class="d-flex align-items-center">
 		<a href="/post/home-view" class="m-3 col-4 "><h1 class="text-dark">ohanagram</h1></a>
-		<div class="col-4 d-flex search-box">
-			<input type="text" class="form-control" id="searchbox" placeholder="loginId">
-			<a href="#" class="searchBtn">
-				<img alt="searchIcon" src="" width="40px">
-			</a>
+		<form class="col-4 d-flex search-box align-items-center" method="get" action="/user/profile-view">
+			<input type="text" class="form-control" name="userId" placeholder="loginId">
+			<button type="submit" class="btn btn-secondary" id="searchBtn">검색</button>
 		
-		</div>
+		</form>
 		<div class="d-flex col-4 justify-content-end align-items-center pr-4">
 			<c:if test="${not empty userId }" >
 
@@ -21,3 +19,22 @@
 		</div>
 		
 	</header>
+<script>
+	
+$(document).ready(function(){
+
+
+	$("#userProfileImage").click(function(){
+
+		if($("#userNav").hasClass("d-none")){
+			
+			$("#userNav").removeClass("d-none");
+			return;
+		}
+		else{
+			$("#userNav").addClass("d-none");
+			return;
+		}
+	})
+})	
+</script>
