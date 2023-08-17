@@ -17,5 +17,9 @@ public interface PostRepository {
 	public List<Post> selectPostListByUserId(@Param("userId")int userId);
 
 	public Post selectPostById(@Param("postId")int postId);
+
+	public int updatePost(@Param("postId")int postId, @Param("content")String content);
+
+	public int deletePost(@Param("postId")int postId);
 	
 }

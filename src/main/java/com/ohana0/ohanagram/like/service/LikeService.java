@@ -50,6 +50,13 @@ public class LikeService {
 	}
 
 
+	public int deleteLikeByPostId(int postId) {
+		int count = likeRepository.deleteLikeByPostId(postId);
+		return count;
+		
+	}
+
+
 
 
 }

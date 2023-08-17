@@ -45,11 +45,11 @@ public class PostController {
 	}
 	
 	@GetMapping("/detail-view")
-	public String postDetailView(@RequestParam("postId") int postId,Model model) {
-		
-		Post post = postService.getPostById(postId);
+	public String postDetailView(@RequestParam("postId") int postId,Model model,HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		PostDetail post = postService.getPostDetail(postId, userId);
 		model.addAttribute("post",post);
-		String userName = userService.getUserNameById(post.getUserId());
+		String userName = userService.getLoginIdById(post.getUserId());
 		model.addAttribute("userName",userName);
 		List<CommentDetail> commentList = commentService.getCommentListByPostId(postId);
 		model.addAttribute("commentList",commentList);

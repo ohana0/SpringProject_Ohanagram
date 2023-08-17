@@ -15,6 +15,12 @@
 	<delete id="deleteLike" parameterType="map">
 		DELETE FROM `like`
 		WHERE `userId` = #{userId} AND `postId` = #{postId}
+	</delete>		
+	
+	<delete id="deleteLikeByPostId" parameterType="int">
+		DELETE FROM `like`
+		WHERE `postId` = #{postId}
+	
 	</delete>
 	
 	<select id="countLike" parameterType="int">

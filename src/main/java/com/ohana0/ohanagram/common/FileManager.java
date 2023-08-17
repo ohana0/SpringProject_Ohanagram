@@ -62,6 +62,22 @@ public class FileManager{
 		
 		return "/images" + directoryName + file.getOriginalFilename();
 	}
+	//D:\김동휘\springProject\workspace\Ohanagram\files
+	public static boolean deleteFile(String imagePath) {
+		
+		
+		String fileDerectory = FILE_UPLOAD_PATH +imagePath.substring(7);		
+		
+		File file = new File(fileDerectory);
+		
+		if(file.exists()) {
+			return file.delete();
+		}
+		else {
+			return false;
+		}
+		
+	}
 
 
 }

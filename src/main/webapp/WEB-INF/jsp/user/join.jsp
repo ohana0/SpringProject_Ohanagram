@@ -70,7 +70,7 @@
 		
 		$("#idInput").on("input",function(){
 			
-			isChecked = false;
+			idChecked = false;
 		});
 		
 		

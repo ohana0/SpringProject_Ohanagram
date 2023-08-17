@@ -46,6 +46,33 @@ public class PostService {
 		List<Post> postList = postRepository.selectPostListByUserId(userId);
 		return postList;
 	}
+	
+	public PostDetail getPostDetail(int postId,String userId) {
+		Post post = postRepository.selectPostById(postId);
+		String myLike;
+		if(likeService.duplicateLike(post.getId(), userId)==1) {
+			myLike = "<i class=\"bi bi-heart-fill text-danger\"></i>";
+			
+		}
+		else {
+			myLike="<i class=\"bi bi-heart\"></i>";
+		}
+		PostDetail postDetail = PostDetail.builder()
+				.id(post.getId())
+				.content(post.getContent())
+				.imagePath(post.getImagePath())
+				.userId(post.getUserId())
+				.userName(userService.getUserNameById(post.getUserId()))
+				.myLike(myLike)
+				.loginId(userService.getLoginIdById(post.getUserId()))
+				.profileImagePath(userService.getProfileImagePathById(post.getUserId()))
+				.likeCount(likeService.countLike(post.getId()))
+				.commentList(commentService.getCommentListByPostId(post.getId()))
+				.build();
+		
+		
+		return postDetail;
+	}
 
 	public List<PostDetail> getPostDetailList(String userId) {
 		List<Post> postList = postRepository.selectPostList();
@@ -54,7 +81,7 @@ public class PostService {
 		for(Post post:postList) {
 			String myLike;
 			if(likeService.duplicateLike(post.getId(), userId)==1) {
-				myLike = "<i class=\"bi bi-heart-fill\"></i>";
+				myLike = "<i class=\"bi bi-heart-fill text-danger\"></i>";
 				
 			}
 			else {
@@ -83,6 +110,16 @@ public class PostService {
 	public Post getPostById(int postId) {
 		Post post = postRepository.selectPostById(postId);
 		return post;
+	}
+
+	public int updatePost(int postId, String content) {
+		int count = postRepository.updatePost(postId,content);
+		return count;
+	}
+
+	public int deletePost(int postId) {
+		int count = postRepository.deletePost(postId);
+		return count;
 	}
 
 }

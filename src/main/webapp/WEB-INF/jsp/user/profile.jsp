@@ -21,16 +21,17 @@
 		<div class="contentsArea col-6">
 		<div class="d-flex">
 			<img src="${user.profileImagePath }" width="260px" height="260px" class="m-2">
-			<div class="profileBox">
+			<div class="profileBox m-2">
 				<h3>${user.name }</h3>
-				<div>${user.introduce }</div>
-				<div>게시글 ${countPost }개</div>
+				<div style="height:160px">${user.introduce }</div>
+				<b>${user.email }</b>
+				<div>게시글 <b>${countPost }</b>개</div>
 			</div>
 		</div>
 		<hr>
 		<div class="cardList d-flex flex-wrap">
 <c:forEach items="${postList}" var="post">
-				<a class="card" href="">
+				<a class="card" href="/post/detail-view?postId=${post.id }">
 					<img src="${post.imagePath }" width="170px" height="170px" class="m-2">	
 				</a>
 </c:forEach>

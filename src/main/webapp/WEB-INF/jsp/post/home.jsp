@@ -21,8 +21,8 @@
 		<div class="contentsArea col-6">
 			<div class="input-box card">
 				<div class="d-flex m-2">
-					<img src="${profileImagePath }" width="40px" class="m-2">
-					<b class="m-2">${userId }</b>
+					
+					<a class="d-flex" href="/user/profile-view?userId=${userId }"><img src="${profileImagePath }" width="40px" class="m-2"><b class="m-2 text-dark">${userId }</b></a>
 				</div>
 				<textarea placeholder="내용을 입력하세요" rows="4" class="form-control border rounded m-2 mt-0" style="width:550px" id="contentInput"></textarea>
 				<div class="d-flex justify-content-between m-2">
@@ -41,26 +41,34 @@
 				<div class="card">
 					<div class="d-flex align-items-center justify-content-between mt-2">
 						<div class="d-flex align-items-center m-2">
-							<img src="${post.profileImagePath }" width="40px">
-							<strong class="ml-4">${post.loginId }</strong>
+						
+						<img src="${post.profileImagePath }" width="40px">
+							
+							<a href="/user/profile-view?userId=${post.loginId }">
+								<strong class="ml-4 text-dark">${post.loginId }</strong>
+							</a>
 						</div>
 						<i class="bi bi-three-dots-vertical"></i>
 					</div>
 					
-					<img src="${post.imagePath }" width="550px" class="m-2">
+					<a href="/post/detail-view?postId=${post.id }">
+						<img src="${post.imagePath }" width="550px" class="m-2">
+					</a>
 
-					<a class="likeCount m-2" id="${post.id}">${post.myLike}${post.likeCount }명이 좋아합니다</a>
-					<div class="m-2"><strong>${post.userName }</strong>${post.content } </div>
+					<div class="likeCount m-2" id="${post.id}">${post.myLike}${post.likeCount }명이 좋아합니다</div>
+					
+					<div class="m-2"><a href="/user/profile-view?userId=${post.loginId }"><strong class="mr-1 text-dark">${post.userName }</strong></a>${post.content } </div>
+					
 					<div class="comment-box m-2">
 						<div class="bg-light mb-2">댓글</div>
 	<c:forEach items="${post.commentList }" var="comment">						
 						<div class="d-flex">
-							<b class="col-4">${comment.loginId}</b><div>${comment.content}</div>
+							<a href="/user/profile-view?userId=${comment.loginId }"><b class="col-4 text-dark">${comment.loginId}</b></a><div>${comment.content}</div>
 						</div>
 	</c:forEach>					
 						
 						
-						<div>
+						<div class="d-flex d-100">
 								<input type="text" class="form-control" id="commentInput${post.id }">
 								<button type="button" class="btn btn-lignt btn-small commentInput" postId="${post.id }">작성</button>
 
@@ -169,6 +177,15 @@
 			let content = $("#contentInput").val();
 			
 			var file = $("#postImageInput")[0].files[0];
+			
+			if(content==""){
+				alert("내용을 입력하세요");
+				return;
+			}
+			if(file == null){
+				alert("사진을 등록하세요");
+				return;
+			}
 			
 			let formData = new FormData();
 			formData.append("content",content);

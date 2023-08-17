@@ -38,5 +38,10 @@ public class CommentService {
 		}
 		return commentDetailList;
 	}
+
+	public int deleteCommentByPostId(int postId) {
+		int count = commentRepository.deleteCommentByPostId(postId);
+		return count;
+	}
 	
 }
