@@ -12,29 +12,23 @@
 		<div class="d-flex col-4 justify-content-end align-items-center pr-4">
 			<c:if test="${not empty userId }" >
 
-				<a id="userProfileImage" href="#"><img alt="userImage" src="${profileImagePath }" width="50px"></a>
+				<a id="userProfileImage" href="#"  data-toggle="modal" data-target="#userNav"><img alt="userImage" src="${profileImagePath }" width="50px"></a>
+				
 
 			</c:if>
 			
 		</div>
-		
+<!-- Modal -->
+<div class="modal fade" id="userNav" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<div class="modal-content">
+ 		<div class="nav flex-column w-100">
+ 			<button>${userId }</button>
+		    <a href="/user/logout" class="btn nav-link bg-secondary text-white font-weight-bold">로그아웃</a>
+		    <a href="/user/profile-view/?userId=${userId }" class="btn nav-link bg-secondary text-white font-weight-bold">내글보기</a>
+		</div>
+	</div>
+  </div>
+</div>
 	</header>
-<script>
 	
-$(document).ready(function(){
-
-
-	$("#userProfileImage").click(function(){
-
-		if($("#userNav").hasClass("d-none")){
-			
-			$("#userNav").removeClass("d-none");
-			return;
-		}
-		else{
-			$("#userNav").addClass("d-none");
-			return;
-		}
-	})
-})	
-</script>

@@ -18,8 +18,6 @@
 	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 	<section class="contents d-flex">
 		<div class="col-3"></div>
-		
-<c:if test="${not empty user }" >
 		<div class="contentsArea col-6">
 		<div class="d-flex">
 			<img src="${user.profileImagePath }" width="260px" height="260px" class="m-2">
@@ -40,15 +38,6 @@
 </c:forEach>
 		</div>
 		</div>
-</c:if>
-<c:if test="${empty user }">
-<div>
-	<h1>오류발생: 해당유저가 존재하지않습니다.</h1>
-	<br>
-	<a href="/post/home-view">홈으로 돌아가기</a>
-</div>
-
-</c:if>
 	
 	</section>
 	

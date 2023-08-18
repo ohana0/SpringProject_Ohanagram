@@ -46,6 +46,9 @@ public class UserController {
 	@GetMapping("/profile-view")
 	public String profile(@RequestParam("userId")String userId, Model model) {
 		User user = userService.getUserByUserId(userId);
+		if(user == null) {
+			return"/user/profile";
+		}
 		
 		if(user.getProfileImagePath() == null) {
 			user.setProfileImagePath("/images/null/null_user_image.png");

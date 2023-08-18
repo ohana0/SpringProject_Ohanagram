@@ -15,6 +15,7 @@
 <body>
 <div id="wrap">
 	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
+
 	
 	<section class="contents d-flex">
 		<div class="col-3"></div>
@@ -48,16 +49,29 @@
 								<strong class="ml-4 text-dark">${post.loginId }</strong>
 							</a>
 						</div>
-						<i class="bi bi-three-dots-vertical"></i>
+				<c:if test="${post.userId == id }">
+						<i class="bi bi-three-dots-vertical more-btn" data-post-id="${post.id }" data-toggle="modal" data-target="#deleteModal"></i>
+						
+				</c:if>
+						
 					</div>
-					
+
 					<a href="/post/detail-view?postId=${post.id }">
 						<img src="${post.imagePath }" width="550px" class="m-2">
 					</a>
 
-					<div class="likeCount m-2" id="${post.id}">${post.myLike}${post.likeCount }명이 좋아합니다</div>
+					<div class="likeCount m-2 d-flex" id="${post.id}">
+						<c:if test="${post.myLike}">
+							<i class="bi bi-heart-fill text-danger"></i>
+						</c:if>
+						<c:if test="${not post.myLike }">
+							<i class="bi bi-heart"></i>
+						</c:if>
 					
-					<div class="m-2"><a href="/user/profile-view?userId=${post.loginId }"><strong class="mr-1 text-dark">${post.userName }</strong></a>${post.content } </div>
+					<div>${post.likeCount }명이 좋아합니다</div>
+					</div>
+					
+					<div class="m-2"><a href="/user/profile-view?userId=${post.loginId }"><strong class="mr-1 text-dark">${post.loginId}</strong></a>${post.content } </div>
 					
 					<div class="comment-box m-2">
 						<div class="bg-light mb-2">댓글</div>
@@ -70,7 +84,7 @@
 						
 						<div class="d-flex d-100">
 								<input type="text" class="form-control" id="commentInput${post.id }">
-								<button type="button" class="btn btn-lignt btn-small commentInput" postId="${post.id }">작성</button>
+								<button type="button" class="btn btn-lignt btn-small commentInput" data-post-id="${post.id }">작성</button>
 
 							
 						</div>
@@ -81,30 +95,76 @@
 		
 			</div>
 		</div>
-	<%@ include file="/WEB-INF/jsp/include/userNav.jsp" %>
-
 
 	</section>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <button type="button" class="btn btn-secondary w-100 mb-1" id="deleteBtn">삭제하기</button>
+        <button type="button" class="btn btn-secondary w-100" id="updateBtn">수정하기</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 	<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
 	
 </div>
 <script>
 
 	$(document).ready(function(){
+		$("#updateBtn").on("click",function(){
+			let postId = $("#deleteBtn").data("post-id");
+			
+			location.href="/post/update-view?postId="+postId;
+		})
+		
+		
+		$("#deleteBtn").on("click",function(){
+			let postId = $(this).data("post-id");
+
+			$.ajax({
+				type:"delete"
+				,url:"/post/delete"
+				,data:{"postId":postId}
+				,success:function(data){
+					if(data.result=="success"){
+						location.reload();
+					}
+					else{
+						alert("삭제 실패");
+						return;
+
+					}
+					
+					
+				}
+				,error:function(){
+					alert("에러발생");
+					return;
+				}
+			})
+			
+			
+		})
+		
+		
+		$(".more-btn").on("click",function(){
+			let postId = $(this).data("post-id");
+			
+			$("#deleteBtn").data("post-id",postId);
+			
+		});
 		
 		$(".commentInput").on("click",function(){
 			
-			let postId = $(this).attr("postId");
+			let postId = $(this).data("post-id");
 			
 			let content = $("#commentInput"+postId).val();
 			

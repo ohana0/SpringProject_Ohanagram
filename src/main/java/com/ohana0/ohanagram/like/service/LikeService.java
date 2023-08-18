@@ -17,19 +17,15 @@ public class LikeService {
 	
 	
 	
-	public int addLike(int postId, String loginId) {
-		
-		int userId = userService.getIdByUserId(loginId);
-		
+	public int addLike(int postId, int userId) {
+
 		int count = likeRepository.insertLike(postId,userId);
 		
 		return count;
 	}
 
 
-	public int deleteLike(String loginId, int postId) {
-		int userId = userService.getIdByUserId(loginId);
-		
+	public int deleteLike(int userId, int postId) {		
 		int count = likeRepository.deleteLike(postId,userId);
 		return count;
 	}
@@ -41,12 +37,16 @@ public class LikeService {
 	}
 
 
-	public int duplicateLike(int postId, String loginId) {
-		int userId = userService.getIdByUserId(loginId);
+	public boolean duplicateLike(int postId, int userId) {
 		
 		int count = likeRepository.selectByPostIdUserId(postId,userId);
 		
-		return count;
+		if(count==0) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 

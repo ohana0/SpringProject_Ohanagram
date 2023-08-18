@@ -16,6 +16,7 @@
 <div id="wrap">
 	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 	<hr>
+<c:if test="${not empty post }">
 	<section class="contents d-flex">
 		<div class="col-2"></div>
 		<div class="contentsArea col-8 card p-2">
@@ -49,35 +50,48 @@
 			</div>
 			</div>
 				<div class="likecount">
-					<div class="likeCount m-2" id="${post.id}">${post.myLike}${post.likeCount }명이 좋아합니다</div>
+					<div class="likeCount m-2" id="${post.id}">					
+					<c:if test="${post.myLike}">
+						<i class="bi bi-heart-fill text-danger"></i>
+					</c:if>
+					<c:if test="${not post.myLike }">
+						<i class="bi bi-heart"></i>
+					</c:if>${post.likeCount }명이 좋아합니다</div>
 				</div>
 				<div class="commentInput d-flex w-100">
 					<input type="text" class="form-control m-1" id="comment">
 					<button type="button" class="btn btn-lignt btn-small m-1" id="commentInputBtn">작성</button>
 				</div>
 			<hr>
-				
+<c:if test="${post.userId == id }">
 			<div class="d-flex justify-content-between align-items-center">
-				<button class="btn btn-secondary" id="updateBtn">수정</button>
-				<button class="btn btn-secondary" id="deleteBtn">삭제</button>
+				<a href="/post/update-view?postId=${post.id }"><button class="btn btn-secondary" id="updateBtn">수정</button></a>
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">삭제</button>
+
 			</div>
-
+</c:if>
 		</div>    	
-
-		<div class="col-1"></div>
-		<div class="col-1 d-none" id="userNav">
-
-				<ul class="nav flex-column" style="width:100px">
-				    <li class="nav-item"><a href="/user/logout" class="nav-link bg-secondary text-white font-weight-bold">로그아웃</a></li>
-				    <li class="nav-item"><a href="/user/profile-view/?userId=${userId }" class="nav-link bg-secondary text-white font-weight-bold">내글보기</a></li>
-				    
-				</ul>
-
-		</div>
-
 	</section>
+</c:if>
 	
 	
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">삭제하기</h5>
+      </div>
+      <div class="modal-body">
+        정말로 삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">돌아가기</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn">삭제하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 	
 	
 	

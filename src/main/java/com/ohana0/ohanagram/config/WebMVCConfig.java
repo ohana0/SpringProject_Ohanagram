@@ -1,10 +1,12 @@
 package com.ohana0.ohanagram.config;
 
 	import org.springframework.context.annotation.Configuration;
-	import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-	import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-	import com.ohana0.ohanagram.common.FileManager;
+import com.ohana0.ohanagram.common.FileManager;
+import com.ohana0.ohanagram.common.PermissionInterceptor;
 
 	@Configuration
 	public class WebMVCConfig implements WebMvcConfigurer {
@@ -16,5 +18,14 @@ package com.ohana0.ohanagram.config;
 		}
 		
 		
+		@Override
+		public void addInterceptors(InterceptorRegistry registry) {
+			
+			PermissionInterceptor interceptor = new PermissionInterceptor();
+			
+			registry.addInterceptor(interceptor)
+			.addPathPatterns("/**")
+			.excludePathPatterns("/user/logout","/static/**","/images/**");
+		}
 
 	}

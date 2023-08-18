@@ -19,8 +19,9 @@ public class PostDetail {
 	private String loginId;
 	private String profileImagePath;
 	private int likeCount;
-	private String myLike;
+	private boolean myLike;
 	private List<CommentDetail> commentList;
+
 	
 
 	

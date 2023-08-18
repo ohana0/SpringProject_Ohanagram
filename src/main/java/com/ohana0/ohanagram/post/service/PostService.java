@@ -47,15 +47,16 @@ public class PostService {
 		return postList;
 	}
 	
-	public PostDetail getPostDetail(int postId,String userId) {
+	
+	public PostDetail getPostDetail(int postId,int userId) {
 		Post post = postRepository.selectPostById(postId);
-		String myLike;
-		if(likeService.duplicateLike(post.getId(), userId)==1) {
-			myLike = "<i class=\"bi bi-heart-fill text-danger\"></i>";
+		boolean myLike;
+		if(likeService.duplicateLike(post.getId(), userId)) {
+			myLike = true;
 			
 		}
 		else {
-			myLike="<i class=\"bi bi-heart\"></i>";
+			myLike=false;
 		}
 		PostDetail postDetail = PostDetail.builder()
 				.id(post.getId())
@@ -65,7 +66,7 @@ public class PostService {
 				.userName(userService.getUserNameById(post.getUserId()))
 				.myLike(myLike)
 				.loginId(userService.getLoginIdById(post.getUserId()))
-				.profileImagePath(userService.getProfileImagePathById(post.getUserId()))
+				.profileImagePath(userService.getProfileImagePathById(post.getUserId()))//한행의정보를가져와서
 				.likeCount(likeService.countLike(post.getId()))
 				.commentList(commentService.getCommentListByPostId(post.getId()))
 				.build();
@@ -74,18 +75,18 @@ public class PostService {
 		return postDetail;
 	}
 
-	public List<PostDetail> getPostDetailList(String userId) {
+	public List<PostDetail> getPostDetailList(int userId) {
 		List<Post> postList = postRepository.selectPostList();
 		List<PostDetail> postDetailList =new ArrayList<>();
 		
 		for(Post post:postList) {
-			String myLike;
-			if(likeService.duplicateLike(post.getId(), userId)==1) {
-				myLike = "<i class=\"bi bi-heart-fill text-danger\"></i>";
+			boolean myLike;
+			if(likeService.duplicateLike(post.getId(), userId)) {
+				myLike = true;
 				
 			}
 			else {
-				myLike="<i class=\"bi bi-heart\"></i>";
+				myLike=false;
 			}
 			PostDetail postDetail = PostDetail.builder()
 					.id(post.getId())

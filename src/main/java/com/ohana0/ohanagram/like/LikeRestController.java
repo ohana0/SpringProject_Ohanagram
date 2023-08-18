@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +24,12 @@ public class LikeRestController {
 			@RequestParam("postId") int postId
 			,HttpSession session
 			){
-		String loginId = (String) session.getAttribute("userId");
+		int userId = (Integer) session.getAttribute("id");
 		
-		int duplicateLike = likeService.duplicateLike(postId,loginId);
+		boolean duplicateLike = likeService.duplicateLike(postId,userId);
 		
-		if(duplicateLike!=0) {
-			int count = likeService.deleteLike(loginId,postId);
+		if(duplicateLike) {
+			int count = likeService.deleteLike(userId,postId);
 			
 			Map<String,String> resultMap = new HashMap<>();
 			if(count == 1) {
@@ -42,7 +43,7 @@ public class LikeRestController {
 		}
 		
 		else {
-			int count = likeService.addLike(postId,loginId);
+			int count = likeService.addLike(postId,userId);
 			
 			
 			
@@ -59,7 +60,7 @@ public class LikeRestController {
 		}
 		
 	}
-	
+
 		
 	
 	

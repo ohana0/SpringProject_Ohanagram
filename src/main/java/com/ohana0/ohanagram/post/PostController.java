@@ -35,7 +35,7 @@ public class PostController {
 	
 	@GetMapping("/home-view")
 	public String homeView(HttpSession session, Model model){
-		String userId = (String)session.getAttribute("userId");
+		int userId = (Integer)session.getAttribute("id");
 		List<PostDetail> postList = postService.getPostDetailList(userId);
 		
 		
@@ -46,8 +46,9 @@ public class PostController {
 	
 	@GetMapping("/detail-view")
 	public String postDetailView(@RequestParam("postId") int postId,Model model,HttpSession session) {
-		String userId = (String)session.getAttribute("userId");
+		int userId = (Integer)session.getAttribute("id");
 		PostDetail post = postService.getPostDetail(postId, userId);
+
 		model.addAttribute("post",post);
 		String userName = userService.getLoginIdById(post.getUserId());
 		model.addAttribute("userName",userName);
@@ -56,5 +57,16 @@ public class PostController {
 		
 		return "/post/postDetail";
 	}
+	
+	@GetMapping("/update-view")
+	public String postUpdate(@RequestParam("postId") int postId,Model model,HttpSession session) {
+		int userId = (Integer) session.getAttribute("id");
+		PostDetail post = postService.getPostDetail(postId, userId);
+		model.addAttribute("post", post);
+		
+		
+		return"/post/update";
+	}
+	
 	
 }
