@@ -29,7 +29,7 @@
 				</div>
 				<div class="d-flex pt-3">
 					<label class="input-label col-3 text-center">Password</label>
-					<input type="text" class="form-control col-9" id="passwordInput">
+					<input type="password" class="form-control col-9" id="passwordInput">
 				</div>
 				<button type="submit" class="btn btn-success btn-block mt-2" id="loginBtn">로그인</button>
 			</form>

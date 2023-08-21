@@ -43,10 +43,10 @@
 					<div class="d-flex align-items-center justify-content-between mt-2">
 						<div class="d-flex align-items-center m-2">
 						
-						<img src="${post.profileImagePath }" width="40px">
 							
 							<a href="/user/profile-view?userId=${post.loginId }">
-								<strong class="ml-4 text-dark">${post.loginId }</strong>
+								<img src="${post.profileImagePath }" width="40px">
+								<strong class="ml-2 text-dark">${post.loginId }</strong>
 							</a>
 						</div>
 				<c:if test="${post.userId == id }">

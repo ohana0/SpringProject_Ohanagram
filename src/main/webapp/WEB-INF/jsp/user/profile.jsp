@@ -41,6 +41,8 @@
 		</div>
 		</div>
 </c:if>
+
+
 <c:if test="${empty user }">
 <div>
 	<h1>오류발생: 해당유저가 존재하지않습니다.</h1>

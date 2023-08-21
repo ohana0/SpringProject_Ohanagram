@@ -18,7 +18,7 @@ public class PermissionInterceptor implements HandlerInterceptor{
 		
 		// /post로시작하는페이지 접근X 로그인페이지로
 		if(userId == null) {
-			if() {
+			if(uri.startsWith("/post")) {
 				response.sendRedirect("/user/login-view");
 				return false;
 				
